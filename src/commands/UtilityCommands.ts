@@ -72,7 +72,13 @@ export class UtilityCommands {
   }
 
   hash(text: string, algorithm: string = 'sha256'): void {
-    const hash = this.utilityService.hashText(text, algorithm);
-    console.log(`${algorithm}: ${hash}`);
+    try {
+      const hash = this.utilityService.hashText(text, algorithm);
+      console.log(`${algorithm}: ${hash}`);
+    } catch (error: any) {
+      const message = error && error.message ? error.message : String(error);
+      console.error(`Error hashing text with algorithm "${algorithm}": ${message}`);
+      process.exitCode = 1;
+    }
   }
 }
