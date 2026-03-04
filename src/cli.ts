@@ -49,7 +49,12 @@ gh.command('repos <username>')
   .option('--sort <type>', 'Sort by: stars, updated, name', 'updated')
   .option('--limit <number>', 'Number of repos', '10')
   .action(async (username: string, options: any) => {
-    await githubCommands.repos(username, options.sort, parseInt(options.limit));
+    const limit = parseInt(options.limit, 10);
+    if (isNaN(limit) || limit < 1) {
+      console.error('Error: --limit must be a positive integer');
+      process.exit(1);
+    }
+    await githubCommands.repos(username, options.sort, limit);
   });
 
 gh.command('repo <owner> <repo>')
@@ -63,7 +68,12 @@ gh.command('trending')
   .option('--lang <language>', 'Filter by language')
   .option('--count <number>', 'Number of repos', '10')
   .action(async (options: any) => {
-    await githubCommands.trending(options.lang, parseInt(options.count));
+    const count = parseInt(options.count, 10);
+    if (isNaN(count) || count < 1) {
+      console.error('Error: --count must be a positive integer');
+      process.exit(1);
+    }
+    await githubCommands.trending(options.lang, count);
   });
 
 program
@@ -99,7 +109,12 @@ program
   .description('Generate UUID')
   .option('-n <count>', 'Number of UUIDs', '1')
   .action(async (options: any) => {
-    await utilityCommands.uuid(parseInt(options.n));
+    const n = parseInt(options.n, 10);
+    if (isNaN(n) || n < 1) {
+      console.error('Error: -n must be a positive integer');
+      process.exit(1);
+    }
+    await utilityCommands.uuid(n);
   });
 
 program
@@ -107,7 +122,12 @@ program
   .description('Generate secure password')
   .option('-l <length>', 'Password length', '16')
   .action(async (options: any) => {
-    await utilityCommands.password(parseInt(options.l));
+    const length = parseInt(options.l, 10);
+    if (isNaN(length) || length < 1) {
+      console.error('Error: -l must be a positive integer');
+      process.exit(1);
+    }
+    await utilityCommands.password(length);
   });
 
 program
