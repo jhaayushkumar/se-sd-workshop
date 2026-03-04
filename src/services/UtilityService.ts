@@ -47,6 +47,15 @@ export class UtilityService {
   }
 
   hashText(text: string, algorithm: string = 'sha256'): string {
-    return createHash(algorithm).update(text).digest('hex');
+    const allowedAlgorithms = ['md5', 'sha1', 'sha256'] as const;
+    const normalizedAlgorithm = algorithm.toLowerCase();
+
+    if (!allowedAlgorithms.includes(normalizedAlgorithm as (typeof allowedAlgorithms)[number])) {
+      throw new Error(
+        `Unsupported hash algorithm "${algorithm}". Allowed algorithms are: ${allowedAlgorithms.join(', ')}.`
+      );
+    }
+
+    return createHash(normalizedAlgorithm).update(text).digest('hex');
   }
 }
