@@ -1,6 +1,6 @@
 # mycli
 
-A multi-purpose command-line tool built with Node.js. It includes basic utilities, GitHub commands, weather lookup, and more — all powered by public APIs with no extra dependencies beyond axios and commander.
+A multi-purpose command-line tool built with Node.js and TypeScript. It includes basic utilities, GitHub commands, weather lookup, and more — all powered by public APIs with no extra dependencies beyond axios and commander.
 
 ## Table of Contents
 
