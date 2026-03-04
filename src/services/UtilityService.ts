@@ -1,19 +1,24 @@
 import axios from 'axios';
 import { randomBytes, createHash } from 'crypto';
 
+const httpClient = axios.create({
+  // Set a reasonable timeout so CLI commands fail fast if the remote API stalls
+  timeout: 10000,
+});
+
 export class UtilityService {
   async getJoke() {
-    const response = await axios.get('https://official-joke-api.appspot.com/jokes/programming/random');
+    const response = await httpClient.get('https://official-joke-api.appspot.com/jokes/programming/random');
     return response.data[0];
   }
 
   async getIP() {
-    const response = await axios.get('https://ipapi.co/json/');
+    const response = await httpClient.get('https://ipapi.co/json/');
     return response.data;
   }
 
   async getPokemon() {
-    const response = await axios.get('https://pokeapi.co/api/v2/pokemon/pikachu');
+    const response = await httpClient.get('https://pokeapi.co/api/v2/pokemon/pikachu');
     return response.data;
   }
 
